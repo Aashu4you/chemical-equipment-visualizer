@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import CSVUploadView, EquipmentListView
+from .views import get_equipment, upload_csv
 
 urlpatterns = [
-    path('upload/', CSVUploadView.as_view()),
-    path('equipment/', EquipmentListView.as_view()),
+    path('equipment/', get_equipment),
+    path('upload/', upload_csv),
 ]

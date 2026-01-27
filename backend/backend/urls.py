@@ -21,7 +21,7 @@ from django.http import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('api.urls')),
-    path('equipment/', include('equipment.urls')),
-    path('', lambda request: HttpResponse("Welcome to Chemical Equipment Visualizer!")),  # root URL
+    path('api/', include('equipment.urls')),
+    path('', lambda request: HttpResponse("Welcome to Chemical Equipment Visualizer!")),
 ]
+
