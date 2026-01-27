@@ -74,3 +74,22 @@ def upload_csv(request):
         {"message": "CSV uploaded successfully", "summary": summary},
         status=status.HTTP_201_CREATED
     )
+
+
+# for the summary
+@api_view(['GET'])
+def equipment_summary(request):
+    summary = {
+        "total_equipment": Equipment.objects.count(),
+        "avg_flowrate": Equipment.objects.aggregate(models.Avg('flowrate'))['flowrate__avg'],
+        "avg_pressure": Equipment.objects.aggregate(models.Avg('pressure'))['pressure__avg'],
+        "avg_temperature": Equipment.objects.aggregate(models.Avg('temperature'))['temperature__avg'],
+        "equipment_type_distribution": {
+            item['equipment_type']: item['count']
+            for item in Equipment.objects
+                .values('equipment_type')
+                .annotate(count=models.Count('equipment_type'))
+        }
+    }
+
+    return Response(summary)
