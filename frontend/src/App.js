@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import api from "./api";
 import CSVUpload from "./components/CSVUpload";
 import EquipmentTable from "./components/EquipmentTable";
+import EquipmentTypeChart from "./components/Charts/EquipmentTypeChart";
+import AvgParametersChart from "./components/Charts/AvgParametersChart";
+import "./components/Charts/chartSetup";
 import "./App.css";
 
 function App() {
@@ -31,16 +34,13 @@ function App() {
     <div className="container">
       <h1>Chemical Equipment Dashboard</h1>
 
-      {/* Upload Section */}
       <div className="section">
         <h2>Upload CSV</h2>
         <CSVUpload onSuccess={loadData} />
       </div>
 
-      {/* Summary Section */}
       <div className="section">
         <h2>Summary</h2>
-
         {loading ? (
           <p>Loading summary...</p>
         ) : (
@@ -49,17 +49,14 @@ function App() {
               Total Equipment
               <span>{summary.total_equipment}</span>
             </div>
-
             <div className="card">
               Avg Flowrate
               <span>{summary.avg_flowrate}</span>
             </div>
-
             <div className="card">
               Avg Pressure
               <span>{summary.avg_pressure}</span>
             </div>
-
             <div className="card">
               Avg Temperature
               <span>{summary.avg_temperature}</span>
@@ -68,14 +65,23 @@ function App() {
         )}
       </div>
 
-      {/* Table Section */}
+      <div className="section">
+        <h2>Equipment Type Distribution</h2>
+        {!loading && (
+          <EquipmentTypeChart
+            distribution={summary.equipment_type_distribution}
+          />
+        )}
+      </div>
+
+      <div className="section">
+        <h2>Average Operating Parameters</h2>
+        {!loading && <AvgParametersChart summary={summary} />}
+      </div>
+
       <div className="section">
         <h2>Equipment List</h2>
-        {loading ? (
-          <p>Loading equipment...</p>
-        ) : (
-          <EquipmentTable data={equipment} />
-        )}
+        {loading ? <p>Loading equipment...</p> : <EquipmentTable data={equipment} />}
       </div>
     </div>
   );
