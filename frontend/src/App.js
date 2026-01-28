@@ -30,6 +30,11 @@ function App() {
     loadData();
   }, []);
 
+  const formatNumber = (num) => {
+    if (num === null || num === undefined) return "N/A";
+    return typeof num === "number" ? num.toFixed(2) : num;
+  };
+
   return (
     <div className="container">
       <h1>Chemical Equipment Dashboard</h1>
@@ -51,15 +56,15 @@ function App() {
             </div>
             <div className="card">
               Avg Flowrate
-              <span>{summary.avg_flowrate}</span>
+              <span>{formatNumber(summary.avg_flowrate)}</span>
             </div>
             <div className="card">
               Avg Pressure
-              <span>{summary.avg_pressure}</span>
+              <span>{formatNumber(summary.avg_pressure)}</span>
             </div>
             <div className="card">
               Avg Temperature
-              <span>{summary.avg_temperature}</span>
+              <span>{formatNumber(summary.avg_temperature)}</span>
             </div>
           </div>
         )}
