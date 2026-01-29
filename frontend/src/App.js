@@ -102,8 +102,6 @@ function App() {
   const formatNumber = (num) => {
     if (num === null || num === undefined || isNaN(num)) return "N/A";
     return Number(num).toFixed(2);
-
-
   };
 
   const exportToCSV = () => {
@@ -130,26 +128,24 @@ function App() {
     link.click();
 
     URL.revokeObjectURL(url);
-
-    const clearAllData = async () => {
-      const confirmClear = window.confirm(
-        "⚠ This will delete ALL equipment data. Are you sure?"
-      );
-
-      if (!confirmClear) return;
-
-      try {
-        await api.delete("equipment/clear/");
-        await loadData();
-        alert("✅ All equipment data cleared successfully");
-      } catch (error) {
-        console.error("Error clearing data", error);
-        alert("❌ Failed to clear data");
-      }
-    };
-
   };
 
+  const clearAllData = async () => {
+    const confirmClear = window.confirm(
+      "⚠ This will delete ALL equipment data. Are you sure?"
+    );
+
+    if (!confirmClear) return;
+
+    try {
+      await api.delete("equipment/clear/");
+      await loadData();
+      alert("✅ All equipment data cleared successfully");
+    } catch (error) {
+      console.error("Error clearing data", error);
+      alert("❌ Failed to clear data");
+    }
+  };
 
   return (
     <div className={`container ${darkMode ? "dark" : ""}`}>
@@ -161,9 +157,19 @@ function App() {
       </header>
 
       {/* CSV Upload */}
-      <div className="section">
-        <h2>Upload CSV</h2>
-        <CSVUpload onSuccess={loadData} />
+      <div className="section upload-section">
+        <div className="section-header-with-icon">
+          <div className="icon-title">
+            <span className="section-icon">📁</span>
+            <div>
+              <h2>Data Management</h2>
+              <p className="section-subtitle">Upload new equipment data or manage existing records</p>
+            </div>
+          </div>
+        </div>
+        <div className="upload-content">
+          <CSVUpload onSuccess={loadData} />
+        </div>
       </div>
 
       {/* Filter + Search */}
@@ -192,9 +198,6 @@ function App() {
           />
         </div>
       </div>
-
-
-
 
       {/* Summary */}
       <div className="section">
@@ -239,11 +242,31 @@ function App() {
           {!loading && <AvgParametersChart summary={summary} />}
         </div>
       </div>
-      <div className="section">
-        <button className="export-btn" onClick={exportToCSV}>
-          ⬇ Export Filtered Data (CSV)
+
+      {/* Export Section */}
+      <div className="section export-section">
+        <div className="section-header-with-icon">
+          <div className="icon-title">
+            <span className="section-icon">⬇️</span>
+            <div>
+              <h2>Export Data</h2>
+              <p className="section-subtitle">Download filtered equipment data as CSV</p>
+            </div>
+          </div>
+          <div className="data-count">
+            {filteredEquipment.length} {filteredEquipment.length === 1 ? 'record' : 'records'}
+          </div>
+        </div>
+        <button 
+          className="export-btn" 
+          onClick={exportToCSV}
+          disabled={filteredEquipment.length === 0}
+        >
+          <span className="btn-icon">📊</span>
+          Export to CSV
         </button>
       </div>
+
       {/* Table */}
       <div className="section">
         <h2>Equipment List</h2>
@@ -254,8 +277,6 @@ function App() {
         )}
       </div>
     </div>
-
-
   );
 }
 
