@@ -14,6 +14,9 @@ function App() {
   // filter
   const [selectedType, setSelectedType] = useState("All");
 
+  // search
+  const [searchText, setSearchText] = useState("");
+
   // dark mode
   const [darkMode, setDarkMode] = useState(false);
 
@@ -44,15 +47,25 @@ function App() {
     });
   };
 
-  /* ===== FILTER LOGIC ===== */
+  /* ===== FILTER OPTIONS ===== */
   const equipmentTypes = useMemo(() => {
     return ["All", ...new Set(equipment.map((e) => e.equipment_type))];
   }, [equipment]);
 
+  /* ===== FILTER + SEARCH LOGIC ===== */
   const filteredEquipment = useMemo(() => {
-    if (selectedType === "All") return equipment;
-    return equipment.filter((e) => e.equipment_type === selectedType);
-  }, [equipment, selectedType]);
+    return equipment.filter((e) => {
+      const matchesType =
+        selectedType === "All" || e.equipment_type === selectedType;
+
+      const matchesSearch =
+        e.equipment_name
+          ?.toLowerCase()
+          .includes(searchText.toLowerCase());
+
+      return matchesType && matchesSearch;
+    });
+  }, [equipment, selectedType, searchText]);
 
   /* ===== SUMMARY FROM FILTERED DATA ===== */
   const summary = useMemo(() => {
@@ -89,7 +102,54 @@ function App() {
   const formatNumber = (num) => {
     if (num === null || num === undefined || isNaN(num)) return "N/A";
     return Number(num).toFixed(2);
+
+
   };
+
+  const exportToCSV = () => {
+    if (filteredEquipment.length === 0) {
+      alert("No data to export");
+      return;
+    }
+
+    const headers = Object.keys(filteredEquipment[0]);
+
+    const rows = filteredEquipment.map((item) =>
+      headers.map((h) => `"${item[h]}"`).join(",")
+    );
+
+    const csvContent =
+      headers.join(",") + "\n" + rows.join("\n");
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = "filtered_equipment_data.csv";
+    link.click();
+
+    URL.revokeObjectURL(url);
+
+    const clearAllData = async () => {
+      const confirmClear = window.confirm(
+        "⚠ This will delete ALL equipment data. Are you sure?"
+      );
+
+      if (!confirmClear) return;
+
+      try {
+        await api.delete("equipment/clear/");
+        await loadData();
+        alert("✅ All equipment data cleared successfully");
+      } catch (error) {
+        console.error("Error clearing data", error);
+        alert("❌ Failed to clear data");
+      }
+    };
+
+  };
+
 
   return (
     <div className={`container ${darkMode ? "dark" : ""}`}>
@@ -106,20 +166,35 @@ function App() {
         <CSVUpload onSuccess={loadData} />
       </div>
 
-      {/* Filter */}
-      <div className="section">
-        <h2>Filter by Equipment Type</h2>
-        <select
-          value={selectedType}
-          onChange={(e) => setSelectedType(e.target.value)}
-        >
-          {equipmentTypes.map((type) => (
-            <option key={type} value={type}>
-              {type}
-            </option>
-          ))}
-        </select>
+      {/* Filter + Search */}
+      <div className="section filter-search-row">
+        <div className="filter-box">
+          <label>Filter by Equipment Type</label>
+          <select
+            value={selectedType}
+            onChange={(e) => setSelectedType(e.target.value)}
+          >
+            {equipmentTypes.map((type) => (
+              <option key={type} value={type}>
+                {type}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="filter-box">
+          <label>Search Equipment</label>
+          <input
+            type="text"
+            placeholder="Search by equipment name..."
+            value={searchText}
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
       </div>
+
+
+
 
       {/* Summary */}
       <div className="section">
@@ -164,7 +239,11 @@ function App() {
           {!loading && <AvgParametersChart summary={summary} />}
         </div>
       </div>
-
+      <div className="section">
+        <button className="export-btn" onClick={exportToCSV}>
+          ⬇ Export Filtered Data (CSV)
+        </button>
+      </div>
       {/* Table */}
       <div className="section">
         <h2>Equipment List</h2>
@@ -175,6 +254,8 @@ function App() {
         )}
       </div>
     </div>
+
+
   );
 }
 

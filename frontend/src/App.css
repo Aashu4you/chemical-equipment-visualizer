@@ -181,3 +181,93 @@ tr:hover {
   padding: 24px;
   box-sizing: border-box;
 }
+
+
+/* ===== Filter + Search Row ===== */
+
+.filter-search-row {
+  display: flex;
+  gap: 20px;
+  align-items: flex-end;
+  flex-wrap: wrap;
+}
+
+.filter-box {
+  flex: 1;
+  min-width: 250px;
+  display: flex;
+  flex-direction: column;
+}
+
+.filter-box label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.filter-box select,
+.filter-box input {
+  padding: 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+}
+
+/* Dark mode support */
+.dark .filter-box select,
+.dark .filter-box input {
+  background-color: #1f2937;
+  color: #fff;
+  border-color: #374151;
+}
+
+
+/* Export Button */
+.export-btn {
+  padding: 12px 18px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #2563eb;
+  color: white;
+  font-weight: 600;
+}
+
+.export-btn:hover {
+  background-color: #1d4ed8;
+}
+
+/* Dark mode */
+.dark .export-btn {
+  background-color: #3b82f6;
+}
+
+
+/* Action buttons row */
+.action-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+/* Clear Button */
+.clear-btn {
+  padding: 12px 18px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  background-color: #dc2626;
+  color: white;
+  font-weight: 600;
+}
+
+.clear-btn:hover {
+  background-color: #b91c1c;
+}
+
+/* Dark mode */
+.dark .clear-btn {
+  background-color: #ef4444;
+}
