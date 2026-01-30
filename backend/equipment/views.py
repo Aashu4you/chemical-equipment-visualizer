@@ -80,9 +80,16 @@ def delete_equipment(request, id):
         return Response({"error": "Equipment not found"}, status=404)
 
 
-# ✅ DELETE ALL DATA (RESET)
+
+
 @api_view(['DELETE'])
 def delete_all_equipment(request):
-    count = Equipment.objects.count()
-    Equipment.objects.all().delete()
-    return Response({"message": f"{count} records deleted"})
+    deleted_count, _ = Equipment.objects.all().delete()
+
+    return Response(
+        {
+            "message": "All equipment data deleted successfully",
+            "deleted_records": deleted_count
+        },
+        status=status.HTTP_200_OK
+    )

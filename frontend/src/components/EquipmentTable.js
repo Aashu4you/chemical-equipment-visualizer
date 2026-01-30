@@ -19,6 +19,23 @@ function EquipmentTable({ data, onDelete }) {
       alert("❌ Failed to delete equipment");
     }
   };
+  const handleDeleteAll = async () => {
+  const confirmDelete = window.confirm(
+    "⚠️ This will delete ALL equipment data.\n\nThis action cannot be undone. Continue?"
+  );
+
+  if (!confirmDelete) return;
+
+  try {
+    await api.delete("equipment/delete-all/");
+    alert("✅ All equipment data deleted successfully");
+    onDelete(); // Reload data
+  } catch (error) {
+    console.error("Error deleting all equipment:", error);
+    alert("❌ Failed to delete all equipment data");
+  }
+};
+
 
   if (!data || data.length === 0) {
     return (
@@ -29,6 +46,7 @@ function EquipmentTable({ data, onDelete }) {
   }
 
   return (
+  <>
     <table className="equipment-table">
       <thead>
         <tr>
@@ -45,25 +63,19 @@ function EquipmentTable({ data, onDelete }) {
         {data.map((item, index) => (
           <tr key={item.id}>
             <td className="text-center id-cell">{index + 1}</td>
-
             <td className="equipment-name">{item.equipment_name}</td>
-
             <td>
               <span className="type-badge">{item.equipment_type}</span>
             </td>
-
             <td className="text-right numeric-cell">
               {Number(item.flowrate).toFixed(2)}
             </td>
-
             <td className="text-right numeric-cell">
               {Number(item.pressure).toFixed(2)}
             </td>
-
             <td className="text-right numeric-cell">
               {Number(item.temperature).toFixed(2)}
             </td>
-
             <td className="text-center">
               <button
                 className="delete-btn"
@@ -78,7 +90,19 @@ function EquipmentTable({ data, onDelete }) {
         ))}
       </tbody>
     </table>
-  );
+
+    {/* 🔥 DELETE ALL BUTTON */}
+    <div className="delete-all-container">
+      <button
+        className="delete-all-btn"
+        onClick={handleDeleteAll}
+      >
+        ❌ Delete All Data
+      </button>
+    </div>
+  </>
+);
+
 }
 
 export default EquipmentTable;
