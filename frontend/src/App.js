@@ -273,7 +273,11 @@ function App() {
         {loading ? (
           <p>Loading equipment...</p>
         ) : (
-          <EquipmentTable data={filteredEquipment} />
+          <EquipmentTable
+  data={filteredEquipment}
+  onDelete={loadData}
+/>
+
         )}
       </div>
     </div>

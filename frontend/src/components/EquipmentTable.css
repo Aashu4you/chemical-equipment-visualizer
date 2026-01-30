@@ -1,0 +1,238 @@
+/* Equipment Table */
+.equipment-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.875rem;
+}
+
+.equipment-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.equipment-table th {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 14px 16px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #495057;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #dee2e6;
+  white-space: nowrap;
+}
+
+.equipment-table th:first-child {
+  border-radius: 8px 0 0 0;
+}
+
+.equipment-table th:last-child {
+  border-radius: 0 8px 0 0;
+}
+
+.equipment-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e9ecef;
+  color: #495057;
+  vertical-align: middle;
+}
+
+.equipment-table tbody tr {
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.equipment-table tbody tr:hover {
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  transform: scale(1.005);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.equipment-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.equipment-table tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 8px;
+}
+
+.equipment-table tbody tr:last-child td:last-child {
+  border-radius: 0 0 8px 0;
+}
+
+/* Text Alignment Classes */
+.text-left {
+  text-align: left;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-right {
+  text-align: right;
+}
+
+/* Specific Cell Styling */
+.id-cell {
+  font-weight: 600;
+  color: #6c757d;
+  font-size: 0.8125rem;
+}
+
+.equipment-name {
+  font-weight: 600;
+  color: #212529;
+  min-width: 180px;
+}
+
+.numeric-cell {
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+  color: #495057;
+  font-size: 0.8125rem;
+}
+
+/* Type Badge */
+.type-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #495057;
+  text-transform: capitalize;
+  white-space: nowrap;
+}
+
+/* Delete Button */
+.delete-btn {
+  padding: 6px 14px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #dc2626;
+  background: white;
+  color: #dc2626;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.delete-btn:hover {
+  background: #dc2626;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+.delete-btn:active {
+  transform: translateY(0);
+}
+
+.delete-icon {
+  font-size: 0.9rem;
+}
+
+/* Empty State */
+.table-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6c757d;
+}
+
+.table-empty p {
+  margin: 0;
+  font-size: 0.9375rem;
+}
+
+/* Dark Mode */
+.dark .equipment-table th {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: #cbd5e1;
+  border-bottom-color: #475569;
+}
+
+.dark .equipment-table td {
+  color: #e5e7eb;
+  border-bottom-color: #334155;
+}
+
+.dark .equipment-table tbody tr {
+  background: #1e293b;
+}
+
+.dark .equipment-table tbody tr:hover {
+  background: linear-gradient(90deg, rgba(147, 197, 253, 0.08) 0%, rgba(196, 181, 253, 0.08) 100%);
+}
+
+.dark .id-cell {
+  color: #94a3b8;
+}
+
+.dark .equipment-name {
+  color: #f1f5f9;
+}
+
+.dark .numeric-cell {
+  color: #cbd5e1;
+}
+
+.dark .type-badge {
+  background: linear-gradient(135deg, #334155 0%, #475569 100%);
+  color: #cbd5e1;
+}
+
+.dark .delete-btn {
+  background: #1e293b;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.dark .delete-btn:hover {
+  background: #ef4444;
+  color: white;
+}
+
+.dark .table-empty {
+  color: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .equipment-table {
+    font-size: 0.8125rem;
+  }
+  
+  .equipment-table th,
+  .equipment-table td {
+    padding: 10px 12px;
+  }
+  
+  .delete-btn {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+  
+  .delete-icon {
+    display: none;
+  }
+}
+
+/* Extra small screens */
+@media (max-width: 600px) {
+  .equipment-table th,
+  .equipment-table td {
+    padding: 8px 10px;
+  }
+  
+  .equipment-name {
+    min-width: 120px;
+  }
+}
