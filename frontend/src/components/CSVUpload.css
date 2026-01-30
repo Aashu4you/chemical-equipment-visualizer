@@ -1,0 +1,169 @@
+/* CSV Upload Container */
+.csv-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.csv-upload-container h3 {
+  margin: 0;
+  font-size: 1rem;
+  color: rgba(255, 255, 255, 0.95);
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+/* File Input Wrapper */
+.file-input-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.file-input-wrapper input[type="file"] {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+}
+
+.file-input-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 20px 24px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 2px dashed rgba(255, 255, 255, 0.4);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  color: white;
+  font-weight: 500;
+  text-align: center;
+}
+
+.file-input-label:hover {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.file-input-label.has-file {
+  background: rgba(255, 255, 255, 0.25);
+  border-style: solid;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.file-icon {
+  font-size: 1.5rem;
+}
+
+.file-text {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  flex: 1;
+}
+
+.file-text-main {
+  font-size: 0.9375rem;
+  font-weight: 600;
+}
+
+.file-text-sub {
+  font-size: 0.8125rem;
+  opacity: 0.85;
+}
+
+.file-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
+  font-size: 0.875rem;
+  color: white;
+  backdrop-filter: blur(10px);
+  margin-top: 8px;
+}
+
+.file-name-icon {
+  font-size: 1.2rem;
+}
+
+.file-name-text {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Upload Button */
+.upload-button {
+  padding: 14px 28px;
+  font-size: 15px;
+  font-weight: 600;
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.upload-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: rgba(255, 255, 255, 0.6);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.upload-button:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.upload-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.upload-button-icon {
+  font-size: 1.2rem;
+}
+
+/* Action Row */
+.upload-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .file-input-label {
+    padding: 16px 20px;
+  }
+  
+  .file-text-main {
+    font-size: 0.875rem;
+  }
+  
+  .upload-button {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+/* Dark mode specific adjustments */
+.dark .csv-upload-container h3 {
+  color: rgba(255, 255, 255, 0.95);
+}
