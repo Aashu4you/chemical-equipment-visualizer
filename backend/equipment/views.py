@@ -1,36 +1,30 @@
-from django.db import models
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
+from django.db import models
 from .models import Equipment
 from .serializers import EquipmentSerializer
 import pandas as pd
 
-from django.db import models
 
-# GET API
+# GET all equipment
 @api_view(['GET'])
 def get_equipment(request):
     equipment = Equipment.objects.all().order_by('-uploaded_at')
     serializer = EquipmentSerializer(equipment, many=True)
     return Response(serializer.data)
 
-# Add CSV upload API
+
+# Upload CSV
 @api_view(['POST'])
 def upload_csv(request):
     file = request.FILES.get('file')
 
     if not file:
-        return Response(
-            {"error": "No file uploaded"},
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        return Response({"error": "No file uploaded"}, status=400)
 
     if not file.name.endswith('.csv'):
-        return Response(
-            {"error": "Only CSV files are allowed"},
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        return Response({"error": "Only CSV files allowed"}, status=400)
 
     df = pd.read_csv(file)
 
@@ -43,40 +37,21 @@ def upload_csv(request):
     }
 
     if not required_columns.issubset(df.columns):
-        return Response(
-            {"error": "CSV format is invalid"},
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        return Response({"error": "Invalid CSV format"}, status=400)
 
-    # Save data
     for _, row in df.iterrows():
         Equipment.objects.create(
             equipment_name=row['Equipment Name'],
             equipment_type=row['Type'],
             flowrate=row['Flowrate'],
             pressure=row['Pressure'],
-            temperature=row['Temperature']
+            temperature=row['Temperature'],
         )
 
-    # Summary analytics
-    summary = {
-        "total_equipment": Equipment.objects.count(),
-        "avg_flowrate": Equipment.objects.aggregate(models.Avg('flowrate'))['flowrate__avg'],
-        "avg_pressure": Equipment.objects.aggregate(models.Avg('pressure'))['pressure__avg'],
-        "avg_temperature": Equipment.objects.aggregate(models.Avg('temperature'))['temperature__avg'],
-        "equipment_type_distribution": dict(
-            Equipment.objects.values_list('equipment_type')
-            .annotate(count=models.Count('equipment_type'))
-        )
-    }
-
-    return Response(
-        {"message": "CSV uploaded successfully", "summary": summary},
-        status=status.HTTP_201_CREATED
-    )
+    return Response({"message": "CSV uploaded successfully"}, status=201)
 
 
-# for the summary
+# Summary API
 @api_view(['GET'])
 def equipment_summary(request):
     summary = {
@@ -91,5 +66,23 @@ def equipment_summary(request):
                 .annotate(count=models.Count('equipment_type'))
         }
     }
-
     return Response(summary)
+
+
+# ✅ DELETE SINGLE EQUIPMENT
+@api_view(['DELETE'])
+def delete_equipment(request, id):
+    try:
+        equipment = Equipment.objects.get(id=id)
+        equipment.delete()
+        return Response({"message": "Equipment deleted successfully"})
+    except Equipment.DoesNotExist:
+        return Response({"error": "Equipment not found"}, status=404)
+
+
+# ✅ DELETE ALL DATA (RESET)
+@api_view(['DELETE'])
+def delete_all_equipment(request):
+    count = Equipment.objects.count()
+    Equipment.objects.all().delete()
+    return Response({"message": f"{count} records deleted"})
