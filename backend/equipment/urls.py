@@ -34,5 +34,6 @@ urlpatterns = [
     path('upload-batches/', get_upload_batches),
     path('upload-batch/<int:id>/', delete_upload_batch),
     path('upload-batches/', get_upload_batches),
+    
 
 ]
