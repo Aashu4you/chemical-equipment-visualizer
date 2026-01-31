@@ -1,0 +1,308 @@
+/* Upload History Container */
+.upload-history-container {
+  width: 100%;
+}
+
+/* History Header */
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.history-title-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.history-icon {
+  font-size: 1.5rem;
+}
+
+.upload-history-container h2 {
+  margin: 0;
+  font-size: 0.875rem;
+  color: #495057;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.history-count {
+  background: #e9ecef;
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #495057;
+}
+
+/* History Table */
+.history-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.875rem;
+}
+
+.history-table thead {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.history-table th {
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 14px 16px;
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  color: #495057;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  border-bottom: 2px solid #dee2e6;
+  white-space: nowrap;
+}
+
+.history-table th:first-child {
+  border-radius: 8px 0 0 0;
+}
+
+.history-table th:last-child {
+  border-radius: 0 8px 0 0;
+}
+
+.history-table td {
+  padding: 14px 16px;
+  border-bottom: 1px solid #e9ecef;
+  color: #495057;
+  vertical-align: middle;
+}
+
+.history-table tbody tr {
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.history-table tbody tr:hover {
+  background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+  transform: scale(1.005);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.history-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.history-table tbody tr:last-child td:first-child {
+  border-radius: 0 0 0 8px;
+}
+
+.history-table tbody tr:last-child td:last-child {
+  border-radius: 0 0 8px 0;
+}
+
+/* Cell Styling */
+.index-cell {
+  font-weight: 600;
+  color: #6c757d;
+  font-size: 0.8125rem;
+}
+
+.filename-cell {
+  font-weight: 600;
+  color: #212529;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.file-icon {
+  font-size: 1rem;
+}
+
+.date-cell {
+  color: #6c757d;
+  font-size: 0.8125rem;
+}
+
+.numeric-cell {
+  font-family: 'Courier New', monospace;
+  font-weight: 500;
+  color: #495057;
+  font-size: 0.8125rem;
+}
+
+/* History Delete Button */
+.history-delete-btn {
+  padding: 6px 14px;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 1px solid #dc2626;
+  background: white;
+  color: #dc2626;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  white-space: nowrap;
+}
+
+.history-delete-btn:hover {
+  background: #dc2626;
+  color: white;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+.history-delete-btn:active {
+  transform: translateY(0);
+}
+
+/* Loading & Empty States */
+.upload-history-container .loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  gap: 20px;
+}
+
+.upload-history-container .spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid #e9ecef;
+  border-top-color: #667eea;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+.upload-history-container .empty-state {
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.upload-history-container .empty-icon {
+  font-size: 4rem;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.upload-history-container .empty-state h3 {
+  margin: 0 0 8px;
+  font-size: 1.25rem;
+  color: #495057;
+  font-weight: 600;
+}
+
+.upload-history-container .empty-state p {
+  margin: 0;
+  color: #6c757d;
+  font-size: 0.9375rem;
+}
+
+/* Dark Mode */
+.dark .upload-history-container h2 {
+  color: #93c5fd;
+}
+
+.dark .history-count {
+  background: #334155;
+  color: #cbd5e1;
+}
+
+.dark .history-table th {
+  background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+  color: #cbd5e1;
+  border-bottom-color: #475569;
+}
+
+.dark .history-table td {
+  color: #e5e7eb;
+  border-bottom-color: #334155;
+}
+
+.dark .history-table tbody tr {
+  background: #1e293b;
+}
+
+.dark .history-table tbody tr:hover {
+  background: linear-gradient(90deg, rgba(147, 197, 253, 0.08) 0%, rgba(196, 181, 253, 0.08) 100%);
+}
+
+.dark .index-cell {
+  color: #94a3b8;
+}
+
+.dark .filename-cell {
+  color: #f1f5f9;
+}
+
+.dark .date-cell {
+  color: #94a3b8;
+}
+
+.dark .numeric-cell {
+  color: #cbd5e1;
+}
+
+.dark .history-delete-btn {
+  background: #1e293b;
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.dark .history-delete-btn:hover {
+  background: #ef4444;
+  color: white;
+}
+
+.dark .upload-history-container .spinner {
+  border-color: #334155;
+  border-top-color: #93c5fd;
+}
+
+.dark .upload-history-container .empty-state h3 {
+  color: #cbd5e1;
+}
+
+.dark .upload-history-container .empty-state p {
+  color: #94a3b8;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .history-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+  
+  .history-table {
+    font-size: 0.8125rem;
+  }
+  
+  .history-table th,
+  .history-table td {
+    padding: 10px 12px;
+  }
+  
+  .history-delete-btn {
+    padding: 5px 10px;
+    font-size: 0.75rem;
+  }
+  
+  .history-delete-btn .delete-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 600px) {
+  .history-table th,
+  .history-table td {
+    padding: 8px 10px;
+  }
+}

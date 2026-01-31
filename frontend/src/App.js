@@ -1,6 +1,7 @@
 import { useEffect, useState, useMemo } from "react";
 import api from "./api";
 import CSVUpload from "./components/CSVUpload";
+import UploadHistory from "./components/UploadHistory";
 import EquipmentTable from "./components/EquipmentTable";
 import EquipmentTypeChart from "./components/Charts/EquipmentTypeChart";
 import AvgParametersChart from "./components/Charts/AvgParametersChart";
@@ -35,7 +36,6 @@ function App() {
   useEffect(() => {
     loadData();
 
-    // load saved theme
     const savedTheme = localStorage.getItem("darkMode");
     if (savedTheme === "true") setDarkMode(true);
   }, []);
@@ -111,13 +111,11 @@ function App() {
     }
 
     const headers = Object.keys(filteredEquipment[0]);
-
     const rows = filteredEquipment.map((item) =>
       headers.map((h) => `"${item[h]}"`).join(",")
     );
 
-    const csvContent =
-      headers.join(",") + "\n" + rows.join("\n");
+    const csvContent = headers.join(",") + "\n" + rows.join("\n");
 
     const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
@@ -163,7 +161,9 @@ function App() {
             <span className="section-icon">📁</span>
             <div>
               <h2>Data Management</h2>
-              <p className="section-subtitle">Upload new equipment data or manage existing records</p>
+              <p className="section-subtitle">
+                Upload new equipment data or manage existing records
+              </p>
             </div>
           </div>
         </div>
@@ -250,15 +250,18 @@ function App() {
             <span className="section-icon">⬇️</span>
             <div>
               <h2>Export Data</h2>
-              <p className="section-subtitle">Download filtered equipment data as CSV</p>
+              <p className="section-subtitle">
+                Download filtered equipment data as CSV
+              </p>
             </div>
           </div>
           <div className="data-count">
-            {filteredEquipment.length} {filteredEquipment.length === 1 ? 'record' : 'records'}
+            {filteredEquipment.length}{" "}
+            {filteredEquipment.length === 1 ? "record" : "records"}
           </div>
         </div>
-        <button 
-          className="export-btn" 
+        <button
+          className="export-btn"
           onClick={exportToCSV}
           disabled={filteredEquipment.length === 0}
         >
@@ -267,18 +270,19 @@ function App() {
         </button>
       </div>
 
-      {/* Table */}
+      {/* Equipment Table */}
       <div className="section">
         <h2>Equipment List</h2>
         {loading ? (
           <p>Loading equipment...</p>
         ) : (
-          <EquipmentTable
-  data={filteredEquipment}
-  onDelete={loadData}
-/>
-
+          <EquipmentTable data={filteredEquipment} onDelete={loadData} />
         )}
+      </div>
+
+      {/* Upload History - Positioned AFTER Equipment Table */}
+      <div className="section">
+        <UploadHistory onRefresh={loadData} />
       </div>
     </div>
   );
