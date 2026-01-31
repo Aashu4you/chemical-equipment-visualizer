@@ -4,15 +4,24 @@ from .views import (
     upload_csv,
     equipment_summary,
     delete_equipment,
-    delete_all_equipment
+    delete_all_equipment,
+    get_upload_batches,
+    delete_upload_batch,
 )
 
 urlpatterns = [
+    # Equipment data
     path('equipment/', get_equipment),
-    path('upload/', upload_csv),
-    path('summary/', equipment_summary),
-
-    # DELETE endpoints
     path('equipment/<int:id>/', delete_equipment),
     path('equipment/delete-all/', delete_all_equipment),
+
+    # CSV upload
+    path('upload/', upload_csv),
+
+    # Summary
+    path('summary/', equipment_summary),
+
+    # Upload history (CRITICAL)
+    path('upload-batches/', get_upload_batches),
+    path('upload-batch/<int:id>/', delete_upload_batch),
 ]
