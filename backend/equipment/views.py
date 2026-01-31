@@ -185,3 +185,19 @@ def get_upload_batches(request):
     batches = UploadBatch.objects.all().order_by('-uploaded_at')
     serializer = UploadBatchSerializer(batches, many=True)
     return Response(serializer.data)
+
+
+@api_view(['DELETE'])
+def delete_upload_batch(request, id):
+    try:
+        batch = UploadBatch.objects.get(id=id)
+        batch.delete()
+        return Response(
+            {"message": "Upload batch deleted successfully"},
+            status=status.HTTP_200_OK
+        )
+    except UploadBatch.DoesNotExist:
+        return Response(
+            {"error": "Upload batch not found"},
+            status=status.HTTP_404_NOT_FOUND
+        )

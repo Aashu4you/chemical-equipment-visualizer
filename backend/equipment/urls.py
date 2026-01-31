@@ -15,6 +15,7 @@ from .views import (
     delete_equipment,
     get_upload_batches,
 )
+from .views import delete_upload_batch
 
 
 urlpatterns = [
