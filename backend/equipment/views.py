@@ -5,6 +5,7 @@ from django.db import models
 from .models import Equipment, UploadBatch
 from .serializers import EquipmentSerializer, UploadBatchSerializer
 import pandas as pd
+from .serializers import EquipmentSerializer, UploadBatchSerializer
 
 
 # ✅ GET ALL UPLOAD HISTORY (latest first)
@@ -177,3 +178,10 @@ def delete_all_equipment(request):
         },
         status=status.HTTP_200_OK
     )
+
+
+@api_view(['GET'])
+def get_upload_batches(request):
+    batches = UploadBatch.objects.all().order_by('-uploaded_at')
+    serializer = UploadBatchSerializer(batches, many=True)
+    return Response(serializer.data)

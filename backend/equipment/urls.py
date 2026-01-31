@@ -8,6 +8,14 @@ from .views import (
     get_upload_batches,
     delete_upload_batch,
 )
+from .views import (
+    get_equipment,
+    upload_csv,
+    equipment_summary,
+    delete_equipment,
+    get_upload_batches,
+)
+
 
 urlpatterns = [
     # Equipment data
@@ -24,4 +32,6 @@ urlpatterns = [
     # Upload history (CRITICAL)
     path('upload-batches/', get_upload_batches),
     path('upload-batch/<int:id>/', delete_upload_batch),
+    path('upload-batches/', get_upload_batches),
+
 ]
