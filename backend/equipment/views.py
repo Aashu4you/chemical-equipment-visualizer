@@ -201,3 +201,49 @@ def delete_upload_batch(request, id):
             {"error": "Upload batch not found"},
             status=status.HTTP_404_NOT_FOUND
         )
+
+
+from django.http import HttpResponse
+from reportlab.lib.pagesizes import A4
+from reportlab.pdfgen import canvas
+from .models import Equipment
+
+
+def generate_pdf(request):
+    response = HttpResponse(content_type='application/pdf')
+    response['Content-Disposition'] = 'attachment; filename="equipment_report.pdf"'
+
+    p = canvas.Canvas(response, pagesize=A4)
+    width, height = A4
+
+    y = height - 50
+    p.setFont("Helvetica-Bold", 16)
+    p.drawString(50, y, "Chemical Equipment Report")
+
+    y -= 40
+    p.setFont("Helvetica", 10)
+
+    equipments = Equipment.objects.all()
+
+    if not equipments.exists():
+        p.drawString(50, y, "No equipment data available.")
+    else:
+        for eq in equipments:
+            line = (
+                f"{eq.equipment_name} | "
+                f"{eq.equipment_type} | "
+                f"Flow: {eq.flowrate} | "
+                f"Pressure: {eq.pressure} | "
+                f"Temp: {eq.temperature}"
+            )
+            p.drawString(50, y, line)
+            y -= 15
+
+            if y < 50:
+                p.showPage()
+                y = height - 50
+                p.setFont("Helvetica", 10)
+
+    p.showPage()
+    p.save()
+    return response

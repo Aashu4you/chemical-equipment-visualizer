@@ -14,6 +14,7 @@ from .views import (
     equipment_summary,
     delete_equipment,
     get_upload_batches,
+    generate_pdf,
 )
 from .views import delete_upload_batch
 
@@ -34,6 +35,7 @@ urlpatterns = [
     path('upload-batches/', get_upload_batches),
     path('upload-batch/<int:id>/', delete_upload_batch),
     path('upload-batches/', get_upload_batches),
+    path('generate-pdf/', generate_pdf),
     
 
 ]
