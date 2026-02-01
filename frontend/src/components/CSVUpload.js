@@ -73,7 +73,7 @@ function CSVUpload({ onSuccess }) {
           <div className="file-name">
             <span className="file-name-icon">📄</span>
             <span className="file-name-text">{file.name}</span>
-            <span className="file-name-icon">
+            <span className="file-size">
               {(file.size / 1024).toFixed(2)} KB
             </span>
           </div>

@@ -396,3 +396,18 @@ tr:hover {
     align-self: flex-start;
   }
 }
+
+.export-actions {
+  display: flex;
+  gap: 12px;          /* 👈 spacing between buttons */
+  align-items: center;
+}
+
+/* optional: make PDF button look slightly different */
+.export-btn.pdf {
+  background-color: #e74c3c;
+}
+
+.export-btn.pdf:hover {
+  background-color: #c0392b;
+}

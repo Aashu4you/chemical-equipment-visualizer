@@ -127,6 +127,9 @@ function App() {
 
     URL.revokeObjectURL(url);
   };
+  const downloadPDF = () => {
+  window.open("http://127.0.0.1:8000/api/generate-pdf/", "_blank");
+};
 
   const clearAllData = async () => {
     const confirmClear = window.confirm(
@@ -244,31 +247,45 @@ function App() {
       </div>
 
       {/* Export Section */}
-      <div className="section export-section">
-        <div className="section-header-with-icon">
-          <div className="icon-title">
-            <span className="section-icon">⬇️</span>
-            <div>
-              <h2>Export Data</h2>
-              <p className="section-subtitle">
-                Download filtered equipment data as CSV
-              </p>
-            </div>
-          </div>
-          <div className="data-count">
-            {filteredEquipment.length}{" "}
-            {filteredEquipment.length === 1 ? "record" : "records"}
-          </div>
-        </div>
-        <button
-          className="export-btn"
-          onClick={exportToCSV}
-          disabled={filteredEquipment.length === 0}
-        >
-          <span className="btn-icon">📊</span>
-          Export to CSV
-        </button>
+<div className="section export-section">
+  <div className="section-header-with-icon">
+    <div className="icon-title">
+      <span className="section-icon">⬇️</span>
+      <div>
+        <h2>Export Data</h2>
+        <p className="section-subtitle">
+          Download filtered equipment data
+        </p>
       </div>
+    </div>
+    <div className="data-count">
+      {filteredEquipment.length}{" "}
+      {filteredEquipment.length === 1 ? "record" : "records"}
+    </div>
+  </div>
+
+  <div className="export-actions">
+    <button
+      className="export-btn"
+      onClick={exportToCSV}
+      disabled={filteredEquipment.length === 0}
+    >
+      <span className="btn-icon">📊</span>
+      Export to CSV
+    </button>
+
+    <button
+      className="export-btn pdf"
+      onClick={() =>
+        window.open("http://127.0.0.1:8000/api/generate-pdf/", "_blank")
+      }
+    >
+      <span className="btn-icon">📄</span>
+      Download PDF
+    </button>
+  </div>
+</div>
+
 
       {/* Equipment Table */}
       <div className="section">
