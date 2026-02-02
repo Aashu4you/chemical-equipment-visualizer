@@ -7,17 +7,8 @@ from .views import (
     delete_all_equipment,
     get_upload_batches,
     delete_upload_batch,
-)
-from .views import (
-    get_equipment,
-    upload_csv,
-    equipment_summary,
-    delete_equipment,
-    get_upload_batches,
     generate_pdf,
 )
-from .views import delete_upload_batch
-
 
 urlpatterns = [
     # Equipment data
@@ -34,8 +25,7 @@ urlpatterns = [
     # Upload history (CRITICAL)
     path('upload-batches/', get_upload_batches),
     path('upload-batch/<int:id>/', delete_upload_batch),
-    path('upload-batches/', get_upload_batches),
-    path('generate-pdf/', generate_pdf),
     
-
+    # PDF generation with filter support
+    path('generate-pdf/', generate_pdf),
 ]
