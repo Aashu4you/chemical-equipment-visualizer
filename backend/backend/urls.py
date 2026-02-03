@@ -21,7 +21,9 @@ from django.http import HttpResponse
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('equipment.urls')),
+    path('api/', include('api.urls')),        # ✅ ADD
+    path('api/', include('equipment.urls')),  # existing
     path('', lambda request: HttpResponse("Welcome to Chemical Equipment Visualizer!")),
 ]
+
 
