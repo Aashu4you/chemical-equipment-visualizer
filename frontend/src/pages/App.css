@@ -781,3 +781,193 @@ body {
     font-size: 1.15rem;
   }
 }
+
+.logout-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+
+  padding: 10px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+
+  background: linear-gradient(
+    135deg,
+    rgba(0, 102, 255, 0.15),
+    rgba(0, 217, 255, 0.12)
+  );
+
+  color: #ffffff;
+  cursor: pointer;
+
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
+}
+
+.logout-btn .logout-icon {
+  font-size: 1.1rem;
+  transition: transform 0.3s ease;
+}
+
+/* Hover Effect */
+.logout-btn:hover {
+  background: linear-gradient(
+    135deg,
+    #0066ff,
+    #00d9ff
+  );
+  border-color: rgba(0, 217, 255, 0.6);
+  box-shadow: 0 10px 30px rgba(0, 102, 255, 0.35);
+  transform: translateY(-2px);
+}
+
+.logout-btn:hover .logout-icon {
+  transform: translateX(3px);
+}
+
+/* Active (click) */
+.logout-btn:active {
+  transform: translateY(0);
+  box-shadow: 0 5px 15px rgba(0, 102, 255, 0.25);
+}
+
+/* ============================= */
+/* Header Right Alignment Fix */
+/* ============================= */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 18px 32px;
+
+  background: linear-gradient(
+    180deg,
+    rgba(10, 14, 23, 0.95),
+    rgba(10, 14, 23, 0.85)
+  );
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+}
+
+/* ============================= */
+/* Brand / Logo */
+/* ============================= */
+
+.brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-icon {
+  font-size: 1.8rem;
+  animation: logoFloat 3s ease-in-out infinite;
+}
+
+@keyframes logoFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.brand-logo h1 {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+
+  background: linear-gradient(135deg, #0066ff, #00d9ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+
+  letter-spacing: 0.5px;
+}
+
+/* ============================= */
+/* Header Right Section */
+/* ============================= */
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ============================= */
+/* User Info */
+/* ============================= */
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  padding: 6px 14px;
+  border-radius: 999px;
+
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  font-size: 0.85rem;
+  color: #e5e7eb;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 700;
+  font-size: 0.85rem;
+
+  background: linear-gradient(135deg, #0066ff, #00d9ff);
+  color: #ffffff;
+}
+
+.user-name {
+  max-width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ============================= */
+/* Responsive Header */
+/* ============================= */
+
+@media (max-width: 768px) {
+  .header {
+    padding: 14px 20px;
+  }
+
+  .brand-logo h1 {
+    font-size: 1.1rem;
+  }
+
+  .user-name {
+    display: none;
+  }
+}

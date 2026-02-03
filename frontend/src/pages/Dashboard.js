@@ -21,9 +21,6 @@ function Dashboard() {
   // search
   const [searchText, setSearchText] = useState("");
 
-  // dark mode
-  const [darkMode, setDarkMode] = useState(false);
-
   const loadData = async () => {
     try {
       setLoading(true);
@@ -31,7 +28,6 @@ function Dashboard() {
       setEquipment(eq.data);
     } catch (err) {
       console.error("Error loading data", err);
-      // If unauthorized, redirect to login
       if (err.response && err.response.status === 401) {
         handleLogout();
       }
@@ -41,31 +37,17 @@ function Dashboard() {
   };
 
   useEffect(() => {
-    // Get user data from localStorage
     const userData = localStorage.getItem("user");
     if (userData) {
       setUser(JSON.parse(userData));
     }
 
     loadData();
-
-    const savedTheme = localStorage.getItem("darkMode");
-    if (savedTheme === "true") setDarkMode(true);
   }, []);
 
-  const toggleDarkMode = () => {
-    setDarkMode((prev) => {
-      localStorage.setItem("darkMode", !prev);
-      return !prev;
-    });
-  };
-
   const handleLogout = () => {
-    // Clear authentication data
     localStorage.removeItem("token");
     localStorage.removeItem("user");
-    
-    // Navigate to login page
     navigate("/login");
   };
 
@@ -151,17 +133,16 @@ function Dashboard() {
   };
 
   const downloadPDF = () => {
-    // Build URL with filter parameters
     const params = new URLSearchParams();
-    
+
     if (selectedType !== "All") {
       params.append("type", selectedType);
     }
-    
+
     if (searchText.trim()) {
       params.append("search", searchText.trim());
     }
-    
+
     const url = `http://127.0.0.1:8000/api/generate-pdf/?${params.toString()}`;
     window.open(url, "_blank");
   };
@@ -184,7 +165,7 @@ function Dashboard() {
   };
 
   return (
-    <div className={`container ${darkMode ? "dark" : ""}`}>
+    <div className="container">
       <header className="header">
         <div className="header-left">
           <div className="brand-logo">
@@ -192,7 +173,7 @@ function Dashboard() {
             <h1>ChemViz Dashboard</h1>
           </div>
         </div>
-        
+
         <div className="header-right">
           {user && (
             <div className="user-info">
@@ -202,11 +183,7 @@ function Dashboard() {
               <span className="user-name">{user.name || user.email}</span>
             </div>
           )}
-          
-          <button className="theme-toggle" onClick={toggleDarkMode}>
-            {darkMode ? "☀" : "🌙"}
-          </button>
-          
+
           <button className="logout-btn" onClick={handleLogout}>
             <span className="logout-icon">🚪</span>
             Logout
@@ -217,7 +194,7 @@ function Dashboard() {
       {/* Welcome Section */}
       <div className="welcome-section">
         <h2 className="welcome-title">
-          Welcome back, {user?.name?.split(' ')[0] || 'User'}! 👋
+          Welcome back, {user?.name?.split(" ")[0] || "User"}! 👋
         </h2>
         <p className="welcome-subtitle">
           Manage and visualize your chemical equipment data
@@ -362,7 +339,7 @@ function Dashboard() {
         )}
       </div>
 
-      {/* Upload History - Positioned AFTER Equipment Table */}
+      {/* Upload History */}
       <div className="section">
         <UploadHistory onRefresh={loadData} />
       </div>
