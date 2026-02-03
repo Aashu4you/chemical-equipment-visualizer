@@ -1,0 +1,783 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+
+/* ─── Design Tokens (exact match to LandingPage.css) ─── */
+:root {
+  --primary: #0066ff;
+  --primary-dark: #0052cc;
+  --secondary: #00d9ff;
+  --accent: #ff3366;
+
+  --bg-dark: #0a0e17;
+  --bg-darker: #050810;
+  --bg-card: rgba(19, 25, 37, 0.45);
+  --bg-card-hover: rgba(0, 102, 255, 0.05);
+  --bg-input: #1a2332;
+
+  --text-primary: #ffffff;
+  --text-secondary: #a0aec0;
+  --text-tertiary: #718096;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --border-light: rgba(255, 255, 255, 0.05);
+  --border-hover: #0066ff;
+
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.2);
+  --shadow-hover: 0 20px 60px rgba(0, 102, 255, 0.2);
+  --shadow-glow: 0 10px 40px rgba(0, 102, 255, 0.4);
+}
+
+/* ─── Reset ─── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--bg-dark);
+  font-family: 'IBM Plex Sans', sans-serif;
+  color: var(--text-primary);
+  min-height: 100vh;
+}
+
+/* ─── Animated Grid Background (same as landing) ─── */
+.dashboard-grid-bg {
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(0, 102, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 102, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  z-index: 0;
+  animation: gridMove 20s linear infinite;
+  pointer-events: none;
+}
+
+@keyframes gridMove {
+  0%   { transform: translate(0, 0); }
+  100% { transform: translate(50px, 50px); }
+}
+
+/* ─── Page Layout ─── */
+.container {
+  position: relative;
+  z-index: 1;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 2rem;
+  min-height: 100vh;
+}
+
+/* ─── Header / Nav bar (mirrors landing-nav) ─── */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 2rem;
+  background: rgba(10, 14, 23, 0.8);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border-light);
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  animation: slideDown 0.5s ease-out;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* Logo — same treatment as .nav-logo / .logo-text on landing */
+.logo-icon {
+  font-size: 1.75rem;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
+}
+
+.logo-text {
+  font-family: 'Space Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+/* User pill */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.85rem 0.4rem 0.4rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 50px;
+}
+
+.user-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.user-name {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+/* Ghost button — mirrors .nav-btn on landing */
+.btn-ghost {
+  padding: 0.6rem 1.1rem;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  color: var(--text-primary);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-ghost:hover {
+  border-color: var(--primary);
+  background: rgba(0, 102, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Logout — subtle red ghost */
+.btn-logout {
+  padding: 0.6rem 1.1rem;
+  background: transparent;
+  border: 1px solid rgba(255, 51, 102, 0.35);
+  border-radius: 8px;
+  color: var(--accent);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.btn-logout:hover {
+  background: rgba(255, 51, 102, 0.12);
+  border-color: var(--accent);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(255, 51, 102, 0.25);
+}
+
+/* ─── Welcome Banner ─── */
+.welcome-banner {
+  padding: 1.75rem 2rem;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.5s ease-out 0.1s both;
+}
+
+.welcome-banner h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+}
+
+.welcome-banner h2 .gradient-name {
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-banner p {
+  font-size: 0.95rem;
+  color: var(--text-tertiary);
+  margin: 0;
+}
+
+/* ─── Generic Section Card (mirrors .feature-card) ─── */
+.section {
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeUp 0.5s ease-out both;
+}
+
+.section:hover {
+  border-color: var(--border-hover);
+  box-shadow: var(--shadow-hover);
+}
+
+.section h2 {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  margin-bottom: 1.25rem;
+}
+
+/* ─── Summary Cards ─── */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: rgba(19, 25, 37, 0.6);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 1.75rem 1.25rem;
+  text-align: center;
+  color: var(--text-tertiary);
+  font-size: 0.82rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  transition: all 0.3s ease;
+  animation: fadeUp 0.5s ease-out both;
+}
+
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.1s;  }
+.card:nth-child(3) { animation-delay: 0.15s; }
+.card:nth-child(4) { animation-delay: 0.2s;  }
+
+.card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-hover);
+  background: var(--bg-card-hover);
+}
+
+/* Stat number — same gradient treatment as .stat-number on landing */
+.card span {
+  display: block;
+  margin-top: 0.85rem;
+  font-family: 'Space Mono', monospace;
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, var(--primary), var(--secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ─── Filter / Search Row ─── */
+.filter-search-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1rem;
+  background: var(--bg-card);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  animation: fadeUp 0.5s ease-out 0.08s both;
+}
+
+.filter-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.filter-box label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.filter-box select,
+.filter-box input {
+  padding: 0.75rem 1rem;
+  background: var(--bg-input);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-primary);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.92rem;
+  outline: none;
+  transition: all 0.3s ease;
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+.filter-box select {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23718096' stroke-width='2.5' stroke-linecap='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  padding-right: 38px;
+}
+
+.filter-box input::placeholder {
+  color: var(--text-tertiary);
+}
+
+.filter-box select:hover,
+.filter-box input:hover {
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.filter-box select:focus,
+.filter-box input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 102, 255, 0.15);
+}
+
+/* ─── Charts Row ─── */
+.charts-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+  gap: 1.5rem;
+}
+
+.chart-box {
+  /* inherits .section styles */
+}
+
+.section canvas {
+  max-height: 300px;
+  margin-top: 0.5rem;
+}
+
+/* ─── Upload Section (accent card) ─── */
+.upload-section {
+  background: linear-gradient(135deg, rgba(0, 102, 255, 0.12), rgba(0, 217, 255, 0.06));
+  border-color: rgba(0, 102, 255, 0.25);
+}
+
+.upload-section:hover {
+  border-color: rgba(0, 102, 255, 0.45);
+  box-shadow: 0 12px 40px rgba(0, 102, 255, 0.15);
+}
+
+.section-header-with-icon {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.25rem;
+}
+
+.icon-title {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+}
+
+.section-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.icon-title h2 {
+  margin-bottom: 0.2rem;
+  font-size: 1rem;
+  text-transform: none;
+  letter-spacing: 0;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.section-subtitle {
+  font-size: 0.82rem;
+  color: var(--text-tertiary);
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* ─── Export Section ─── */
+.export-section {
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.1), rgba(0, 102, 255, 0.08));
+  border-color: rgba(0, 217, 255, 0.25);
+}
+
+.export-section:hover {
+  border-color: rgba(0, 217, 255, 0.4);
+  box-shadow: 0 12px 40px rgba(0, 217, 255, 0.15);
+}
+
+.data-count {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  padding: 0.35rem 0.9rem;
+  border-radius: 50px;
+  white-space: nowrap;
+}
+
+.export-actions {
+  display: flex;
+  gap: 0.85rem;
+  flex-wrap: wrap;
+  margin-top: 0.25rem;
+}
+
+/* Primary action button — mirrors .cta-primary from landing */
+.export-btn {
+  padding: 0.75rem 1.6rem;
+  background: var(--primary);
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.export-btn::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  left: -100%;
+  width: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
+  transition: left 0.5s ease;
+}
+
+.export-btn:hover::before { left: 100%; }
+
+.export-btn:hover:not(:disabled) {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+.export-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+
+/* Second export button — ghost variant */
+.export-btn.pdf {
+  background: transparent;
+  border: 1px solid var(--border);
+  color: var(--text-primary);
+}
+
+.export-btn.pdf::before { display: none; }
+
+.export-btn.pdf:hover:not(:disabled) {
+  border-color: var(--secondary);
+  background: rgba(0, 217, 255, 0.1);
+  box-shadow: 0 8px 28px rgba(0, 217, 255, 0.2);
+}
+
+.btn-icon {
+  font-size: 1rem;
+}
+
+/* ─── Equipment Table ─── */
+.equipment-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.85rem;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+}
+
+.equipment-table thead th {
+  background: rgba(10, 14, 23, 0.7);
+  padding: 0.85rem 1rem;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--text-tertiary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+}
+
+.equipment-table tbody td {
+  padding: 0.9rem 1rem;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-light);
+  vertical-align: middle;
+  background: transparent;
+  transition: background 0.2s ease;
+}
+
+.equipment-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.equipment-table tbody tr:hover td {
+  background: rgba(0, 102, 255, 0.04);
+}
+
+/* Cell flavours */
+.id-cell {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
+.equipment-name {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.numeric-cell {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+}
+
+/* Type badge — pill matching landing accent palette */
+.type-badge {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  background: rgba(0, 102, 255, 0.12);
+  border: 1px solid rgba(0, 102, 255, 0.25);
+  border-radius: 50px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--secondary);
+  text-transform: capitalize;
+  white-space: nowrap;
+  letter-spacing: 0.4px;
+}
+
+/* Delete button — ghost red, same pattern as .btn-logout */
+.delete-btn {
+  padding: 0.4rem 0.85rem;
+  background: transparent;
+  border: 1px solid rgba(255, 51, 102, 0.3);
+  border-radius: 8px;
+  color: var(--accent);
+  font-family: 'IBM Plex Sans', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  white-space: nowrap;
+}
+
+.delete-btn:hover {
+  background: rgba(255, 51, 102, 0.12);
+  border-color: var(--accent);
+  box-shadow: 0 4px 14px rgba(255, 51, 102, 0.22);
+}
+
+.delete-icon {
+  font-size: 0.85rem;
+}
+
+/* ─── Empty & Loading States ─── */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem 1rem;
+  gap: 1rem;
+}
+
+.spinner {
+  width: 42px;
+  height: 42px;
+  border: 3px solid var(--border);
+  border-top-color: var(--primary);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 5rem 1rem;
+}
+
+.empty-icon {
+  font-size: 3.5rem;
+  opacity: 0.25;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.empty-state h3 {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  font-size: 0.88rem;
+  color: var(--text-tertiary);
+}
+
+/* ─── Staggered Fade-Up ─── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+/* ─── Text Helpers ─── */
+.text-left   { text-align: left; }
+.text-center { text-align: center; }
+.text-right  { text-align: right; }
+
+/* ─── Responsive ─── */
+@media (max-width: 1024px) {
+  .charts-row {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .header {
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: 1rem 1.25rem;
+  }
+
+  .header-left,
+  .header-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .card span {
+    font-size: 1.6rem;
+  }
+
+  .section {
+    padding: 1.25rem;
+  }
+
+  .filter-search-row {
+    grid-template-columns: 1fr;
+    padding: 1rem;
+  }
+
+  .export-actions {
+    flex-direction: column;
+  }
+
+  .export-btn {
+    justify-content: center;
+  }
+
+  .section-header-with-icon {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .equipment-table thead th,
+  .equipment-table tbody td {
+    padding: 0.7rem 0.6rem;
+    font-size: 0.78rem;
+  }
+
+  .delete-btn {
+    padding: 0.35rem 0.6rem;
+    font-size: 0.72rem;
+  }
+
+  .delete-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .user-name {
+    display: none;
+  }
+
+  .logo-text {
+    font-size: 1.15rem;
+  }
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.65rem;
+  }
+
+  .card {
+    padding: 1.1rem 0.75rem;
+  }
+
+  .card span {
+    font-size: 1.35rem;
+  }
+
+  .welcome-banner {
+    padding: 1.1rem 1.25rem;
+  }
+
+  .welcome-banner h2 {
+    font-size: 1.15rem;
+  }
+}

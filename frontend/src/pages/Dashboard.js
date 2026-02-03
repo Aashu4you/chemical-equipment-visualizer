@@ -1,16 +1,19 @@
 import { useEffect, useState, useMemo } from "react";
-import api from "./api";
-import CSVUpload from "./components/CSVUpload";
-import UploadHistory from "./components/UploadHistory";
-import EquipmentTable from "./components/EquipmentTable";
-import EquipmentTypeChart from "./components/Charts/EquipmentTypeChart";
-import AvgParametersChart from "./components/Charts/AvgParametersChart";
-import "./components/Charts/chartSetup";
+import { useNavigate } from "react-router-dom";
+import api from "../api";
+import CSVUpload from "../components/CSVUpload";
+import UploadHistory from "../components/UploadHistory";
+import EquipmentTable from "../components/EquipmentTable";
+import EquipmentTypeChart from "../components/Charts/EquipmentTypeChart";
+import AvgParametersChart from "../components/Charts/AvgParametersChart";
+import "../components/Charts/chartSetup";
 import "./App.css";
 
-function App() {
+function Dashboard() {
+  const navigate = useNavigate();
   const [equipment, setEquipment] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [user, setUser] = useState(null);
 
   // filter
   const [selectedType, setSelectedType] = useState("All");
@@ -28,12 +31,22 @@ function App() {
       setEquipment(eq.data);
     } catch (err) {
       console.error("Error loading data", err);
+      // If unauthorized, redirect to login
+      if (err.response && err.response.status === 401) {
+        handleLogout();
+      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
+    // Get user data from localStorage
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      setUser(JSON.parse(userData));
+    }
+
     loadData();
 
     const savedTheme = localStorage.getItem("darkMode");
@@ -45,6 +58,15 @@ function App() {
       localStorage.setItem("darkMode", !prev);
       return !prev;
     });
+  };
+
+  const handleLogout = () => {
+    // Clear authentication data
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    
+    // Navigate to login page
+    navigate("/login");
   };
 
   /* ===== FILTER OPTIONS ===== */
@@ -164,11 +186,43 @@ function App() {
   return (
     <div className={`container ${darkMode ? "dark" : ""}`}>
       <header className="header">
-        <h1>Chemical Equipment Dashboard</h1>
-        <button className="theme-toggle" onClick={toggleDarkMode}>
-          {darkMode ? "☀ Light Mode" : "🌙 Dark Mode"}
-        </button>
+        <div className="header-left">
+          <div className="brand-logo">
+            <span className="logo-icon">⚗</span>
+            <h1>ChemViz Dashboard</h1>
+          </div>
+        </div>
+        
+        <div className="header-right">
+          {user && (
+            <div className="user-info">
+              <div className="user-avatar">
+                {user.name ? user.name.charAt(0).toUpperCase() : "U"}
+              </div>
+              <span className="user-name">{user.name || user.email}</span>
+            </div>
+          )}
+          
+          <button className="theme-toggle" onClick={toggleDarkMode}>
+            {darkMode ? "☀" : "🌙"}
+          </button>
+          
+          <button className="logout-btn" onClick={handleLogout}>
+            <span className="logout-icon">🚪</span>
+            Logout
+          </button>
+        </div>
       </header>
+
+      {/* Welcome Section */}
+      <div className="welcome-section">
+        <h2 className="welcome-title">
+          Welcome back, {user?.name?.split(' ')[0] || 'User'}! 👋
+        </h2>
+        <p className="welcome-subtitle">
+          Manage and visualize your chemical equipment data
+        </p>
+      </div>
 
       {/* CSV Upload */}
       <div className="section upload-section">
@@ -316,4 +370,4 @@ function App() {
   );
 }
 
-export default App;
+export default Dashboard;
