@@ -157,7 +157,7 @@ const LandingPage = () => {
             <span className="logo-icon">⚗</span>
             <span className="logo-text">ChemViz</span>
           </div>
-          <p className="footer-text">© 2024 Chemical Equipment Visualizer. All rights reserved.</p>
+          <p className="footer-text">© 2026 Chemical Equipment Visualizer. All rights reserved.</p>
         </div>
       </footer>
     </div>
