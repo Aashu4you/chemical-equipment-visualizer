@@ -1,11 +1,8 @@
 const { app, BrowserWindow } = require("electron");
-<<<<<<< HEAD
 const path = require("path");
 
 // Use app.isPackaged to detect if we are in dev (running from source) or prod
 const isDev = !app.isPackaged;
-=======
->>>>>>> 64d14e954da9f7489c8d1a6bfb5129b38bf797cc
 
 let mainWindow;
 
@@ -14,10 +11,9 @@ function createWindow() {
     width: 1280,
     height: 800,
     webPreferences: {
-<<<<<<< HEAD
-      nodeIntegration: true, // Needed for some electron features, but keeping contextIsolation true is safer
+      nodeIntegration: false,
       contextIsolation: true,
-      preload: path.join(__dirname, 'preload.js') // Best practice: use preload (though we don't have one yet, it's good to prep)
+      preload: path.join(__dirname, 'preload.js')
     },
   });
 
@@ -32,15 +28,6 @@ function createWindow() {
   if (isDev) {
     mainWindow.webContents.openDevTools({ mode: 'detach' });
   }
-=======
-      nodeIntegration: false,
-      contextIsolation: true,
-    },
-  });
-
-  // Load React dev server
-  mainWindow.loadURL("http://localhost:3000");
->>>>>>> 64d14e954da9f7489c8d1a6bfb5129b38bf797cc
 
   mainWindow.on("closed", () => {
     mainWindow = null;
