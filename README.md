@@ -2,6 +2,9 @@
 
 A comprehensive chemical equipment monitoring and visualization platform with Django backend, React web frontend, and PyQt6 desktop application.
 
+> [!NOTE]
+> Project output images and a screen recording demonstration are available in the [output images](file:///d:/Programming/chemical-equipment-visualizer/output%20images) directory.
+
 ## 🚀 Quick Start
 
 ### Prerequisites
