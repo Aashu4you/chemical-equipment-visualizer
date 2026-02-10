@@ -1,14 +1,18 @@
 
-# Colors from web frontend (App.css / AuthPages.css)
+# Enhanced color palette for modern, attractive UI
 COLORS = {
     "primary": "#0066ff",
     "primary_dark": "#0052cc",
+    "primary_light": "#3385ff",
     "secondary": "#00d9ff",
     "accent": "#ff3366",
+    "success": "#00ff88",
+    "warning": "#ffaa00",
     
     "bg_dark": "#0a0e17",
     "bg_darker": "#050810",
-    "bg_card": "#131925", # Solid approximation of rgba(19, 25, 37, 0.45) for base
+    "bg_card": "#1a2332",
+    "bg_card_hover": "#1f2937",
     "bg_input": "#1a2332",
     
     "text_primary": "#ffffff",
@@ -17,6 +21,7 @@ COLORS = {
     
     "border": "rgba(255, 255, 255, 0.1)",
     "border_light": "rgba(255, 255, 255, 0.05)",
+    "shadow": "rgba(0, 0, 0, 0.3)",
 }
 
 def get_stylesheet():
@@ -95,5 +100,4 @@ def get_stylesheet():
         background-color: {COLORS['bg_card']};
         border: 1px solid {COLORS['border']};
         border-radius: 12px;
-    }}
-    """
+    }}\r\n    \r\n    /* Stat Cards */\r\n    QFrame#StatCard {{\r\n        background-color: {COLORS['bg_card']};\r\n        border: 1px solid {COLORS['border']};\r\n        border-radius: 12px;\r\n    }}\r\n    """

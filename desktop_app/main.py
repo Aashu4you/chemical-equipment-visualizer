@@ -9,7 +9,7 @@ from ui.login_window import LoginWindow
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Chemical Equipment Visualizer")
+        self.setWindowTitle("ChemViz - Chemical Equipment Visualizer")
         self.resize(1280, 800)
         
         # Apply Global Styles

@@ -34,8 +34,8 @@ class DashboardWindow(QWidget):
         logo_frame = QFrame()
         logo_frame.setFixedHeight(80)
         logo_layout = QHBoxLayout(logo_frame)
-        logo_label = QLabel("CHEM VIS")
-        logo_label.setStyleSheet(f"color: {COLORS['primary']}; font-size: 20px; font-weight: bold; font-family: 'Courier New';")
+        logo_label = QLabel("ChemViz")
+        logo_label.setStyleSheet(f"color: {COLORS['primary']}; font-size: 22px; font-weight: bold; letter-spacing: 1px;")
         logo_layout.addWidget(logo_label)
         sidebar_layout.addWidget(logo_frame)
 
