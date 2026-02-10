@@ -124,6 +124,63 @@ The dashboard provides real-time equipment monitoring with the following visuali
 - Automatic data validation
 - Progress tracking during upload
 
+## 📋 Sample Data for Testing
+
+A sample CSV file (`sample_equipment_data.csv`) is included in the root directory for testing purposes. This file contains realistic chemical equipment data that you can use to quickly populate the system and test all features.
+
+### Sample Data Contents
+
+The file includes 15 sample equipment entries with the following types:
+- **Pumps** (4 entries)
+- **Valves** (3 entries)
+- **Heat Exchangers** (2 entries)
+- **Reactors** (2 entries)
+- **Condensers** (2 entries)
+- **Compressor** (1 entry)
+- **HD** (1 entry)
+
+### CSV Format Requirements
+
+Your CSV file must follow this exact format:
+
+```csv
+Equipment Name,Type,Flowrate,Pressure,Temperature
+Pump-1,Pump,120,5.2,110
+HD1,HD,50,8.1,65
+```
+
+**Column Specifications:**
+- **Equipment Name**: Unique identifier for the equipment (text)
+- **Type**: Equipment category (text)
+- **Flowrate**: Flow rate value (numeric)
+- **Pressure**: Pressure reading (numeric)
+- **Temperature**: Temperature reading (numeric)
+
+### How to Use Sample Data
+
+#### Web Frontend
+1. Log in to your account
+2. Navigate to the "Upload CSV" tab
+3. Click "Choose File" and select `sample_equipment_data.csv`
+4. Click "Upload" to import the data
+5. Navigate to "Overview" or "Equipment" tabs to view the imported data
+
+#### Desktop Application
+1. Launch the desktop app and log in
+2. Go to the "Upload CSV" tab
+3. Click "Browse" and select `sample_equipment_data.csv`
+4. Click "Upload CSV" to import
+5. Use the refresh button to see the updated data in the dashboard
+
+### Creating Your Own Test Data
+
+To create custom test data:
+1. Copy `sample_equipment_data.csv` as a template
+2. Maintain the same column headers (first row)
+3. Add your equipment data following the format
+4. Ensure numeric values for Flowrate, Pressure, and Temperature
+5. Save as a `.csv` file with UTF-8 encoding
+
 ## 🔑 Authentication
 
 ### Login
